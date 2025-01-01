@@ -27,7 +27,6 @@ export function BasicInformation({ onChange, name, email, phoneNumber }) {
 				onChange={handleChange}
 				placeholder='John Smith'
 			/>
-			<p>Name: {items.name}</p>
 			<label htmlFor='email'>Email:</label>
 			<input
 				className='inputBox'

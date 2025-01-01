@@ -13,7 +13,7 @@ export function EducationalInformation({ onChange, school, studyTitle, dateStudy
 	};
 	return (
 		<form className='formInput divided' action=''>
-			<h2>Education Information: </h2>
+			<h2 className='subheader'>Education Information: </h2>
 			<label htmlFor='school'>School:</label>
 			<input
 				type='text'
@@ -48,6 +48,7 @@ export function EducationalInformation({ onChange, school, studyTitle, dateStudy
 				max={2099}
 			/>
 			<input
+				tabIndex={'0'}
 				className='interactiveButton'
 				type='submit'
 				value='Submit'

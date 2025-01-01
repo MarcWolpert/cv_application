@@ -6,7 +6,6 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 
 export default [
 	{ ignores: ['dist'] },
-	{ extends: ['airbnb', 'airbnb/hooks'] },
 	{
 		files: ['**/*.{js,jsx}'],
 		languageOptions: {

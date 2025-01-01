@@ -47,6 +47,15 @@ export function PracticalExperience({ onChange }) {
 					<h2 className='experienceCounter'>
 						Work Experience #{Object.keys(forms).indexOf(key) + 1}:
 					</h2>
+					<button
+						className='deleteButton interactiveButton'
+						onClick={(e) => {
+							e.preventDefault();
+							deleteForm(key);
+						}}
+					>
+						X
+					</button>
 					<label htmlFor={`companyName-${key}`}>Company Name:</label>
 					<input
 						className='inputBox'
@@ -96,15 +105,7 @@ export function PracticalExperience({ onChange }) {
 						value={form.dateTo}
 						onChange={(e) => handleChange(key, e)}
 					/>
-					<button
-						className='deleteButton interactiveButton'
-						onClick={(e) => {
-							e.preventDefault();
-							deleteForm(key);
-						}}
-					>
-						X
-					</button>
+
 					<input
 						className='interactiveButton'
 						type='submit'
@@ -129,7 +130,7 @@ export function PracticalExperience({ onChange }) {
 					addNewForm(id);
 				}}
 			>
-				Add More Experience
+				{'+'}
 			</button>
 		</div>
 	);
