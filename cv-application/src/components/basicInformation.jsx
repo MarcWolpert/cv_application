@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export function BasicInformation({ name, email, phoneNumber }) {
+export function BasicInformation({ onChange, name, email, phoneNumber }) {
 	const [items, handleItem] = useState({ name, email, phoneNumber });
 	const handleChange = (e) => {
 		handleItem({
@@ -10,12 +10,14 @@ export function BasicInformation({ name, email, phoneNumber }) {
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		onChange(items);
 	};
 	return (
-		<form className='formInput divided' action=''>
+		<form className='formInput divided' id='personalInfo' action=''>
 			<h2>Personal Details : </h2>
 			<label htmlFor='name'>Name:</label>
 			<input
+				className='inputBox'
 				type='text'
 				name='name'
 				id='nameInput'
@@ -28,6 +30,7 @@ export function BasicInformation({ name, email, phoneNumber }) {
 			<p>Name: {items.name}</p>
 			<label htmlFor='email'>Email:</label>
 			<input
+				className='inputBox'
 				type='email'
 				name='email'
 				id='emailInput'
@@ -39,6 +42,7 @@ export function BasicInformation({ name, email, phoneNumber }) {
 			/>
 			<label htmlFor='phone'>Phone Number:</label>
 			<input
+				className='inputBox'
 				type='tel'
 				name='phoneNumber'
 				id='phoneInput'

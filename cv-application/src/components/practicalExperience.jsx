@@ -1,114 +1,133 @@
 // PracticalExperience.jsx
 import { useState } from 'react';
 
-export function PracticalExperience() {
-	const [forms, setForms] = useState([
-		{
+export function PracticalExperience({ onChange }) {
+	const [forms, setForms] = useState({
+		0: {
 			companyName: '',
 			positionTitle: '',
 			responsibilities: '',
 			dateFrom: '',
 			dateTo: '',
 		},
-	]);
+	});
+	const [id, idCounter] = useState(1);
 
-	const handleChange = (index, e) => {
-		const updatedForms = [...forms];
-		updatedForms[index] = {
-			...updatedForms[index],
-			[e.target.name]: e.target.value,
-		};
-		setForms(updatedForms);
+	const handleChange = (formId, e) => {
+		setForms({ ...forms, [formId]: { ...forms[formId], [e.target.name]: e.target.value } });
 	};
 
-	const addNewForm = () => {
-		setForms([
+	const addNewForm = (newId) => {
+		idCounter(id + 1);
+		setForms({
 			...forms,
-			{
+			[newId]: {
 				companyName: '',
 				positionTitle: '',
 				responsibilities: '',
 				dateFrom: '',
 				dateTo: '',
 			},
-		]);
+		});
 	};
 
-	const deleteForm = (e, index) => {
-		e.preventDefault();
-		if (forms.length > 1) {
-			const updatedForms = [...forms];
-			updatedForms.splice(index, 1);
+	const deleteForm = (deleteId) => {
+		if (Object.keys(forms).length > 1) {
+			let updatedForms = { ...forms };
+			delete updatedForms[deleteId];
 			setForms(updatedForms);
+			onChange({ ...updatedForms });
 		}
 	};
 
 	return (
 		<div className='workExperienceContainer'>
-			{forms.map((form, index) => (
-				<form key={index} className='formInput divided'>
-					<h2 className='experienceCounter'>Work Experience #{index + 1}:</h2>
-					<label htmlFor={`companyName-${index}`}>Company Name:</label>
+			{Object.entries(forms).map(([key, form]) => (
+				<form key={key} className='formInput divided'>
+					<h2 className='experienceCounter'>
+						Work Experience #{Object.keys(forms).indexOf(key) + 1}:
+					</h2>
+					<label htmlFor={`companyName-${key}`}>Company Name:</label>
 					<input
+						className='inputBox'
 						type='text'
 						name='companyName'
-						id={`companyName-${index}`}
+						id={`companyName-${key}`}
 						value={form.companyName}
-						onChange={(e) => handleChange(index, e)}
+						onChange={(e) => handleChange(key, e)}
 						maxLength={70}
 						placeholder='Google'
 					/>
-					<label htmlFor={`positionTitle-${index}`}>Position Title:</label>
+					<label htmlFor={`positionTitle-${key}`}>Position Title:</label>
 					<input
+						className='inputBox'
 						type='text'
 						name='positionTitle'
-						id={`positionTitle-${index}`}
+						id={`positionTitle-${key}`}
 						value={form.positionTitle}
-						onChange={(e) => handleChange(index, e)}
+						onChange={(e) => handleChange(key, e)}
 						maxLength={70}
 						placeholder='Data Scientist'
 					/>
-					<label htmlFor={`responsibilities-${index}`}>Main Responsibilities:</label>
-					<input
-						type='text'
+					<label htmlFor={`responsibilities-${key}`}>Description:</label>
+					<textarea
+						className='inputBox'
 						name='responsibilities'
-						id={`responsibilities-${index}`}
+						id={`responsibilities-${key}`}
 						value={form.responsibilities}
-						onChange={(e) => handleChange(index, e)}
-						maxLength={70}
-					/>
-					<label htmlFor={`dateFrom-${index}`}>Date Worked From:</label>
+						placeholder='Analyzed Data'
+						onChange={(e) => handleChange(key, e)}
+					></textarea>
+					<label htmlFor={`dateFrom-${key}`}>Date Worked From:</label>
 					<input
+						className='inputBox'
 						type='date'
 						name='dateFrom'
-						id={`dateFrom-${index}`}
+						id={`dateFrom-${key}`}
 						value={form.dateFrom}
-						onChange={(e) => handleChange(index, e)}
+						onChange={(e) => handleChange(key, e)}
 					/>
-					<label htmlFor={`dateTo-${index}`}>Date Worked Until:</label>
+					<label htmlFor={`dateTo-${key}`}>Date Worked Until:</label>
 					<input
+						className='inputBox'
 						type='date'
 						name='dateTo'
-						id={`dateTo-${index}`}
+						id={`dateTo-${key}`}
 						value={form.dateTo}
-						onChange={(e) => handleChange(index, e)}
+						onChange={(e) => handleChange(key, e)}
 					/>
 					<button
 						className='deleteButton interactiveButton'
 						onClick={(e) => {
-							console.log('Delete Button Clicked.');
-							deleteForm(e, index);
+							e.preventDefault();
+							deleteForm(key);
 						}}
 					>
-						Delete
+						X
 					</button>
+					<input
+						className='interactiveButton'
+						type='submit'
+						value='Submit'
+						onSubmit={(e) => {
+							e.preventDefault();
+							onChange({ ...forms });
+						}}
+						onClick={(e) => {
+							e.preventDefault();
+							onChange({ ...forms });
+						}}
+					/>
 				</form>
 			))}
 			<button
 				className='addMore interactiveButton'
 				id='addMoreID'
 				type='button'
-				onClick={addNewForm}
+				onClick={(e) => {
+					e.preventDefault();
+					addNewForm(id);
+				}}
 			>
 				Add More Experience
 			</button>

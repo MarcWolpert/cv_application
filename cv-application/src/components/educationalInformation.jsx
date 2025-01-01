@@ -1,6 +1,6 @@
 import { useState } from 'react';
-export function EducationalInformation(props) {
-	const [items, handleItem] = useState(props);
+export function EducationalInformation({ onChange, school, studyTitle, dateStudy }) {
+	const [items, handleItem] = useState({ school, studyTitle, dateStudy });
 	const handleChange = (e) => {
 		handleItem({
 			...items,
@@ -9,6 +9,7 @@ export function EducationalInformation(props) {
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		onChange(items);
 	};
 	return (
 		<form className='formInput divided' action=''>
@@ -16,6 +17,7 @@ export function EducationalInformation(props) {
 			<label htmlFor='school'>School:</label>
 			<input
 				type='text'
+				className='inputBox'
 				name='school'
 				id='schoolInput'
 				value={items.school}
@@ -26,6 +28,7 @@ export function EducationalInformation(props) {
 			<label htmlFor='studyTitle'>Area of Study:</label>
 			<input
 				placeholder='Computer Science'
+				className='inputBox'
 				name='studyTitle'
 				id='studyTitleInput'
 				type='text'
@@ -35,11 +38,14 @@ export function EducationalInformation(props) {
 			/>
 			<label htmlFor='dateStudy'>Date of Study:</label>
 			<input
-				type='date'
+				type='number'
+				className='inputBox'
 				name='dateStudy'
 				id='dateStudyInput'
 				value={items.dateStudy}
 				onChange={handleChange}
+				min={1900}
+				max={2099}
 			/>
 			<input
 				className='interactiveButton'
